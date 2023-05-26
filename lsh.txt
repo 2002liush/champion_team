@@ -1,2 +1,4 @@
 name:lsh
 age:21
+school:XJTU
+
