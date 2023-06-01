@@ -19,6 +19,7 @@
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
 #include "spi.h"
+#include "usart.h"
 #include "gpio.h"
 
 /* Private includes ----------------------------------------------------------*/
@@ -35,7 +36,7 @@
 
 /* Private define ------------------------------------------------------------*/
 /* USER CODE BEGIN PD */
-
+#define dist 10
 /* USER CODE END PD */
 
 /* Private macro -------------------------------------------------------------*/
@@ -46,7 +47,7 @@
 /* Private variables ---------------------------------------------------------*/
 
 /* USER CODE BEGIN PV */
-
+char str1[8] = "voltage:";
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -57,6 +58,20 @@ void SystemClock_Config(void);
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
+void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
+{
+//	RxLine++;//每接收到一个数据，进入回调数据长度加一
+//	DataBuff[RxLine-1]=RxBuff[0];//把每次接收到的数据保存到缓存数组
+//	if(RxBuff[0]==0x0A)//判断标志位
+//	{
+//		Stop_Flag=1;
+//	}
+//	else//继续接收数据
+//	{
+//		RxBuff[0]=0;
+//		HAL_UART_Receive_IT(&huart2,RxBuff,1);//继续接收下一个字符
+//	}
+}
 /* USER CODE END 0 */
 
 /**
@@ -88,12 +103,20 @@ int main(void)
   /* Initialize all configured peripherals */
   MX_GPIO_Init();
   MX_SPI2_Init();
+  MX_USART2_UART_Init();
   /* USER CODE BEGIN 2 */
 	Lcd_Init();
 	LCD_LED_SET;//通过IO控制背光
 	LCD_RST_SET;
 	Lcd_Clear(RED);
-	show_str("abcd",4);
+	
+	Gui_DrawFont_GBK24(0,50,BLACK,WHITE,"XJTU Infomation");
+	Gui_DrawFont_GBK24(0,80,BLACK,WHITE,"Single-Chip Experiment");
+	Gui_DrawFont_GBK24(0,120,BLACK,WHITE,"Current Temperatur:");
+	LCD_Showdecimal(170,120,10.0000,2,2,16);
+	
+	
+	HAL_UART_Transmit(&huart2,"My name is xxx.",sizeof("My name is xxx."),HAL_MAX_DELAY);
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -101,7 +124,7 @@ int main(void)
   while (1)
   {
     /* USER CODE END WHILE */
-		FourLed(0,0,0,0);
+
     /* USER CODE BEGIN 3 */
   }
   /* USER CODE END 3 */

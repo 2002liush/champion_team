@@ -24,7 +24,7 @@ void showhanzi(unsigned int x,unsigned int y,unsigned char index);
 void showimage(const unsigned char *p);
 
 void LCD_ShowNum(u16 x,u16 y,unsigned long num,u8 len);
-void show_str(u8 str[],u8 len);
+void show_str(u16 x, u16 y, u8 str[],u8 len,u8 dist);
 //void picture();
 
 #endif

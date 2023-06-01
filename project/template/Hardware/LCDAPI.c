@@ -556,11 +556,11 @@ void picture()
 	showimage(gImage_new);
 }
 
-void show_str(u8 str[],u8 len)
+void show_str(u16 x, u16 y, u8 str[],u8 len,u8 dist)
 {
 	u8 i = 0;
 	for(i=0;i<len;i++)
 	{
-		LCD_ShowChar(i*15,0,str[i],0); 
+		LCD_ShowChar(x + i * dist,y,str[i],1); 
 	}
 }
